@@ -2,13 +2,16 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PlayingBatsman from "./PlayingBatsman";
 import ScoringAction from "./ScoringAction";
+import { useSelector } from "react-redux";
 
 const DashboardScore = () => {
+    const data = useSelector((state)=> state.enterScoreStore);
+    console.log("DashboardScore data", data[0].score);
     return (
         <View>
             <View style={styles.dashboardScoreCard}>
                 <Text style={styles.dashboardScoreTeamName}>test</Text>
-                <Text style={styles.dashboardScore}>200-1</Text>
+                <Text style={styles.dashboardScore}>{data[0].score}-1</Text>
                 <Text style={styles.dashboardOver}>Overs 10.1</Text>
                 <View style={styles.bottomlegend}>
                     <Text style={styles.dashboardTotalOver}>Total Overs 20</Text>

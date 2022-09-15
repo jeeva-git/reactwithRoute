@@ -1,12 +1,11 @@
 import React from "react";
 import { StyleSheet, TextInput, View, Button } from "react-native";
-// import { useDispatch, useSelector } from 'react-redux';
-// import { enterScore } from "../redux/Actions";
+import { useDispatch, useSelector } from 'react-redux';
+import { enterScore } from "../Actions/ScoringActions";
 
 const HomePage = ({ navigation }) => {
 
-    // const data = useSelector((state)=> state.enterScoreStore);
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     
     const [teamA, setTeamA] = React.useState("");
@@ -69,11 +68,10 @@ const HomePage = ({ navigation }) => {
                 placeholder="Enter Off-strike batsman name "
             />
             <Button title="Start" onPress={() => {
-                console.log('Data', data2);
-                // dispatch(enterScore({
-                //     "batsmanName":"Player A",
-                //     "score":10,
-                //  }))
+                dispatch(enterScore({
+                    "batsmanName":"Player A",
+                    "score":10,
+                 }))
                 navigation.navigate('Dashboard')
             }}>
 
