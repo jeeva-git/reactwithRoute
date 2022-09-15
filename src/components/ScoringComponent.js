@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const ScoringAction = (props) => {
+const ScoringComponent = (props) => {
     return (
         <View style={styles.roundView}>
             <Text style={styles.actionText}>{props.action}</Text>
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
         marginTop:6,
     },
 });
-export default ScoringAction;
+export default ScoringComponent;
