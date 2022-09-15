@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PlayingBatsman from "./PlayingBatsman";
-import ScoringAction from "./ScoringAction";
+import ScoringComponent from "./ScoringComponent";
 import { useSelector } from "react-redux";
 
 const DashboardScore = () => {
@@ -26,19 +26,19 @@ const DashboardScore = () => {
 
             <View style={styles.headerView}><Text style={styles.dashboardOver}>Actions</Text></View>
             <View style={styles.scoreActionView}>
-                <ScoringAction action={0}/>
-                <ScoringAction action={1}/>
-                <ScoringAction action={2}/>
-                <ScoringAction action={3}/>
-                <ScoringAction action={4}/>
-                <ScoringAction action={5}/>
-                <ScoringAction action={6}/>
+                <ScoringComponent action={0}/>
+                <ScoringComponent action={1}/>
+                <ScoringComponent action={2}/>
+                <ScoringComponent action={3}/>
+                <ScoringComponent action={4}/>
+                <ScoringComponent action={5}/>
+                <ScoringComponent action={6}/>
            </View>
            <View style={styles.scoreActionView}>
-                <ScoringAction action={"Wd"}/>
-                <ScoringAction action={"Nb"}/>
-                <ScoringAction action={"B"}/>
-                <ScoringAction action={"Wk"}/>
+                <ScoringComponent action={"Wd"}/>
+                <ScoringComponent action={"Nb"}/>
+                <ScoringComponent action={"B"}/>
+                <ScoringComponent action={"Wk"}/>
             </View>
             <View style={styles.headerView}><Text style={styles.dashboardOver}>Bowling</Text></View>
             <View style={styles.scoreActionView}>
