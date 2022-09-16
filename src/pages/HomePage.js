@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, TextInput, View, Button } from "react-native";
+import { StyleSheet, TextInput, View, Button, Text } from "react-native";
 import { useDispatch, useSelector } from 'react-redux';
-import { enterScore } from "../Actions/ScoringActions";
+import { matchInfoLoggedAction } from "../Actions/MatchInfoActions";
 
 const HomePage = ({ navigation }) => {
 
@@ -15,16 +15,10 @@ const HomePage = ({ navigation }) => {
     const [battingFirst, setBattingFirst] = React.useState("");
     const [facingBatsman, setFacingBatsman] = React.useState("");
     const [runner, setRunner] = React.useState("");
-    const data2= {
-        'teamA': teamA,
-        'teamB': teamB,
-        'overs': overs,
-        'battingFirst': battingFirst,
-        'facingBatsman': facingBatsman,
-        'runner': runner,
-    }
     return (
+
         <View style={styles.container}>
+            <View style={styles.headerView}><Text style={styles.dashboardOver}>Team Details</Text></View>
             <TextInput
                 style={styles.input}
                 onChangeText={setTeamA}
@@ -37,18 +31,21 @@ const HomePage = ({ navigation }) => {
                 value={teamB}
                 placeholder="Enter Team B Name"
             />
+            <View style={styles.headerView}><Text style={styles.dashboardOver}>Match Details</Text></View>
             <TextInput
                 style={styles.input}
                 onChangeText={setOvers}
                 value={overs}
                 placeholder="Enter no of overs"
             />
+            
             <TextInput
                 style={styles.input}
                 onChangeText={setTossWin}
-                value={TossWin}
+                value={TossWin} 
                 placeholder="Toss win by"
             />
+            <View style={styles.headerView}><Text style={styles.dashboardOver}>Batting details</Text></View>
             <TextInput
                 style={styles.input}
                 onChangeText={setBattingFirst}
@@ -68,10 +65,20 @@ const HomePage = ({ navigation }) => {
                 placeholder="Enter Off-strike batsman name "
             />
             <Button title="Start" onPress={() => {
-                dispatch(enterScore({
-                    "batsmanName":"Player A",
-                    "score":10,
-                 }))
+                dispatch(matchInfoLoggedAction({
+                    "matchInfo" : {
+                        'teamA': teamA,
+                        'teamB': teamB,
+                        'overs': overs,
+                        'tossWin':TossWin,
+                        'battingFirst': battingFirst,
+                        'totalScore':0,
+                        'extras':0,
+                        'wickets':0,
+                        'target':0,
+                        'ballsBowled':0,
+                    }
+                }))
                 navigation.navigate('Dashboard')
             }}>
 
@@ -92,6 +99,16 @@ const styles = StyleSheet.create({
         borderBottomColor: '#7B16B9',
         color: '#7B16B9',
         fontWeight: 'bold'
+    },
+    dashboardOver : {
+        textAlign:'center',
+        color: 'white',
+        fontSize: 14,
+    },
+    headerView : {
+        height:20,
+        backgroundColor: '#7B16B9',
+        margintop:10,
     },
 });
 export default HomePage;

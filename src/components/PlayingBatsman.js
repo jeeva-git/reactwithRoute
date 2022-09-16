@@ -13,14 +13,16 @@ const styles = StyleSheet.create({
     playername: {
         textAlign:'left',
         color: '#7B16B9',
-        fontSize: 18,
+        fontSize: 12,
         margin:10,
+        fontWeight:"bold"
     },
     playerScore: {
         textAlign:'center',
         color: '#7B16B9',
-        fontSize: 18,
+        fontSize: 12,
         margin:10,
+        fontWeight:"bold"
     },
 });
 export default PlayingBatsman;

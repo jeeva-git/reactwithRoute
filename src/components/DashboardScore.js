@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import PlayingBatsman from "./PlayingBatsman";
 import ScoringComponent from "./ScoringComponent";
-import { useSelector } from "react-redux";
+import {useSelector } from "react-redux";
+import { color } from "react-native-reanimated";
 
-const DashboardScore = () => {
-    const data = useSelector((state)=> state.enterScoreStore);
-    console.log("DashboardScore data", data[0].score);
+const DashboardScore = ({navigation}) => {
+
+    const data = useSelector((state)=> state.matchInfoStore);
+    const [ballCount, setBallCount] = React.useState(0);
+    const [wicketCount, setWicketCount] = React.useState(0);
+    
+    console.log("data   hjkshfkdsj", data);
+    const oversBowledRounded = Math.floor(data["matchInfo"].ballsBowled/ 6); 
+    const balls = data["matchInfo"].ballsBowled % 6;
+
+    navigation.setOptions(
+        { title: data["matchInfo"].battingFirst +" Vs "+ data["matchInfo"].teamB,
+        headerTintColor: 'white',
+        headerStyle: {
+            backgroundColor: '#7B16B9'
+         }},
+        )
+
     return (
         <View>
             <View style={styles.dashboardScoreCard}>
-                <Text style={styles.dashboardScoreTeamName}>test</Text>
-                <Text style={styles.dashboardScore}>{data[0].score}-1</Text>
-                <Text style={styles.dashboardOver}>Overs 10.1</Text>
+                <Text style={styles.dashboardScoreTeamName}>{data["matchInfo"].battingFirst}</Text>
+                <Text style={styles.dashboardScore}>{data["matchInfo"].totalScore} - {data["matchInfo"].wickets}</Text>
+                <Text style={styles.dashboardOver}>Current Over {oversBowledRounded}.{balls}</Text>
                 <View style={styles.bottomlegend}>
-                    <Text style={styles.dashboardTotalOver}>Total Overs 20</Text>
-                    <Text style={styles.dashboardTarget}>Target(201)</Text>
+                    <Text style={styles.dashboardTotalOver}>Total Overs {data["matchInfo"].overs}</Text>
+                    <Text style={styles.dashboardTarget}>Target ({data["matchInfo"].target})</Text>
+                    <Text style={styles.dashboardTarget}>Toss win by {data["matchInfo"].tossWin}</Text>
                 </View>
             </View>
 
@@ -27,7 +44,16 @@ const DashboardScore = () => {
             <View style={styles.headerView}><Text style={styles.dashboardOver}>Actions</Text></View>
             <View style={styles.scoreActionView}>
                 <ScoringComponent action={0}/>
-                <ScoringComponent action={1}/>
+                <ScoringComponent action={1} details={{
+                     "batsmanName": "Batsman A",
+                     "batsmanScore": 1,
+                     "score": 1,
+                     "ball": 2,
+                     "bowler": "Bowler1",
+                     "runsByWide": 0,
+                     "runsByNoBall": 0,
+                     "runsByByes":0,
+                }}/>
                 <ScoringComponent action={2}/>
                 <ScoringComponent action={3}/>
                 <ScoringComponent action={4}/>
@@ -62,7 +88,7 @@ const DashboardScore = () => {
 const styles = StyleSheet.create({
     dashboardScoreCard: {
         backgroundColor: '#7B16B9',
-        padding: 20,
+        paddingTop: 20,
         margin: 10,
         borderRadius: 10,
         height:200,
@@ -115,16 +141,15 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     dashboardTarget : {
-        textAlign:'right',
+        textAlign:'left',
         color: 'white',
         fontSize: 14,
     },
     bottomlegend : {
         flexDirection:'row',
         justifyContent:'space-around',
-        alignItems:'stretch',
-        margin:20,
-        backgroundColor:'brown',
+        // alignItems:'stretch',
+        marginTop:25,
     },
     dashboardPlayers : {
         flexDirection:'row',
