@@ -1,32 +1,33 @@
 import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { enterScoreAction } from "../Actions/MatchInfoActions";
 
 
 const ScoringComponent = (props) => {
+    const data = useSelector((state) => state.matchInfoStore);
     const dispatch = useDispatch();
     const [ballId, setBallId] = React.useState(0);
- 
     return (
         <TouchableOpacity style={styles.roundView} onPress={() => {
-            console.log("ScoringComponent details",props.details.batsmanName);
             const id = ballId;
-            console.log("id", id);
             setBallId(id+1);
-            console.log("after id", ballId);
+            //get index
+            const arrayScores = data["scoreDetails"];
+            const index= arrayScores.length-1;
+            const tempScore = arrayScores.length>0 ? arrayScores[index].totalScore + props.details.score : props.details.score;
+
             dispatch(enterScoreAction({
-                "id" : {
                 "batsmanName": props.details.batsmanName,
                 "batsmanScore": props.details.batsmanScore,
                 "score": props.details.score,
-                "ball": props.details.ball,
+                "ball": ballId,
                 "bowler": props.details.bowler,
                 "runsByWide": props.details.runsByWide,
                 "runsByNoBall": props.details.runsByNoBall,
                 "runsByByes": props.details.runsByByes, 
-                }
+                "totalScore":tempScore
             }))
         }
         }>

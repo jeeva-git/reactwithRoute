@@ -23,7 +23,6 @@ export function enterScoreAction(props) {
     return {
         type: SCORE_ENTERED,
         payload: {
-            "ballId": props.ballId,
             "batsmanName": props.batsmanName,
             "batsmanScore": props.batsmanScore,
             "score": props.score,
@@ -32,6 +31,7 @@ export function enterScoreAction(props) {
             "runsByWide": props.runsByWide,
             "runsByNoBall": props.runsByNoBall,
             "runsByByes": props.runsByByes,
+            "totalScore":props.totalScore
         }
     }
 }
