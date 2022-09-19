@@ -7,7 +7,7 @@ const HomePage = ({ navigation }) => {
 
     const dispatch = useDispatch();
 
-    
+
     const [teamA, setTeamA] = React.useState("");
     const [teamB, setTeamB] = React.useState("");
     const [overs, setOvers] = React.useState("");
@@ -38,11 +38,11 @@ const HomePage = ({ navigation }) => {
                 value={overs}
                 placeholder="Enter no of overs"
             />
-            
+
             <TextInput
                 style={styles.input}
                 onChangeText={setTossWin}
-                value={TossWin} 
+                value={TossWin}
                 placeholder="Toss win by"
             />
             <View style={styles.headerView}><Text style={styles.dashboardOver}>Batting details</Text></View>
@@ -66,18 +66,16 @@ const HomePage = ({ navigation }) => {
             />
             <Button title="Start" onPress={() => {
                 dispatch(matchInfoLoggedAction({
-                    "matchInfo" : {
-                        'teamA': teamA,
-                        'teamB': teamB,
-                        'overs': overs,
-                        'tossWin':TossWin,
-                        'battingFirst': battingFirst,
-                        'totalScore':0,
-                        'extras':0,
-                        'wickets':0,
-                        'target':0,
-                        'ballsBowled':0,
-                    }
+                    'teamA': teamA,
+                    'teamB': teamB,
+                    'overs': overs,
+                    'tossWin': TossWin,
+                    'battingFirst': battingFirst,
+                    'totalScore': 0,
+                    'extras': 0,
+                    'wickets': 0,
+                    'target': 0,
+                    'ballsBowled': 0,
                 }))
                 navigation.navigate('Dashboard')
             }}>
@@ -100,15 +98,15 @@ const styles = StyleSheet.create({
         color: '#7B16B9',
         fontWeight: 'bold'
     },
-    dashboardOver : {
-        textAlign:'center',
+    dashboardOver: {
+        textAlign: 'center',
         color: 'white',
         fontSize: 14,
     },
-    headerView : {
-        height:20,
+    headerView: {
+        height: 20,
         backgroundColor: '#7B16B9',
-        margintop:10,
+        margintop: 10,
     },
 });
 export default HomePage;

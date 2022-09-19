@@ -1,23 +1,37 @@
-import { MATCH_INFO_LOGGED } from "../constants";
+import { MATCH_INFO_LOGGED, SCORE_ENTERED } from "../constants";
 
 export function matchInfoLoggedAction(props) {
-   console.log("Inside matchInfoLoggedAction");
-   console.log("Inside matchInfoLoggedAction props",props["matchInfo"].teamA);
+    console.log("Inside matchInfoLoggedAction props", props.teamA);
     return {
         type: MATCH_INFO_LOGGED,
         payload: {
-            "matchInfo":{
-            'teamA': props["matchInfo"].teamA,
-            'teamB': props["matchInfo"].teamB,
-            'overs': props["matchInfo"].overs,
-            'battingFirst': props["matchInfo"].battingFirst,
-            'tossWin': props["matchInfo"].tossWin,
-            'totalScore': props["matchInfo"].totalScore,
-            'extras':props["matchInfo"].extras,
-            'wickets':props["matchInfo"].wickets,
-            'target':props["matchInfo"].target,
-            'ballsBowled':props["matchInfo"].ballsBowled,
-            }
+            'teamA': props.teamA,
+            'teamB': props.teamB,
+            'overs': props.overs,
+            'battingFirst': props.battingFirst,
+            'tossWin': props.tossWin,
+            'totalScore': props.totalScore,
+            'extras': props.extras,
+            'wickets': props.wickets,
+            'target': props.target,
+            'ballsBowled': props.ballsBowled,
         }
-     }
+    }
+}
+export function enterScoreAction(props) {
+    console.log("Inside Scoring Actions props", props);
+    return {
+        type: SCORE_ENTERED,
+        payload: {
+            "ballId": props.ballId,
+            "batsmanName": props.batsmanName,
+            "batsmanScore": props.batsmanScore,
+            "score": props.score,
+            "ball": props.ball,
+            "bowler": props.bowler,
+            "runsByWide": props.runsByWide,
+            "runsByNoBall": props.runsByNoBall,
+            "runsByByes": props.runsByByes,
+        }
+    }
 }
