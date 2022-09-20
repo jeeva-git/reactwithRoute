@@ -71,11 +71,6 @@ const HomePage = ({ navigation }) => {
                     'overs': overs,
                     'tossWin': TossWin,
                     'battingFirst': battingFirst,
-                    'totalScore': 0,
-                    'extras': 0,
-                    'wickets': 0,
-                    'target': 0,
-                    'ballsBowled': 0,
                 }))
                 navigation.navigate('Dashboard')
             }}>

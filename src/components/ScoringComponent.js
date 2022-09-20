@@ -21,6 +21,11 @@ const ScoringComponent = (props) => {
 
     //calculate wickets
     let totalWickets = arrayScores[index].totalWickets;
+    //no.of dot balls
+    var dotballs = arrayScores.filter(function(p){return p.score == 0;});
+    
+    console.log("dotballs",dotballs.length);
+
     function fnDispatch (islegal,action) {
         dispatch(enterScoreAction({
             "batsmanName": props.details.batsmanName,
