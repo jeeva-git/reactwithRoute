@@ -3,16 +3,22 @@ import { StyleSheet, Text, View } from "react-native";
 import PlayingBatsman from "./PlayingBatsman";
 import ScoringComponent from "./ScoringComponent";
 import { useSelector } from "react-redux";
-import { color } from "react-native-reanimated";
 
 const DashboardScore = ({ navigation }) => {
-
     const data = useSelector((state) => state.matchInfoStore);
-    const oversBowledRounded = Math.floor(data["matchInfo"].ballsBowled / 6);
-    const balls = data["matchInfo"].ballsBowled % 6;
+
     const arrayScores = data["scoreDetails"];
-    const index= arrayScores.length-1;
-    
+    const index = arrayScores.length - 1;
+
+    var oversBowledRounded = Math.floor(data["matchInfo"].ballsBowled / 6);
+    var balls = data["matchInfo"].ballsBowled % 6;
+
+    if (arrayScores.length>= 0) {
+       // console.log("arrayScores[index]",arrayScores[index].ball);
+        oversBowledRounded = Math.floor(arrayScores[index]? arrayScores[index].ball / 6 : 0);
+        balls = arrayScores[index]? arrayScores[index].ball % 6:0;
+    }
+
     navigation.setOptions(
         {
             title: data["matchInfo"].teamA + " Vs " + data["matchInfo"].teamB,
@@ -27,13 +33,13 @@ const DashboardScore = ({ navigation }) => {
         <View>
             <View style={styles.dashboardScoreCard}>
                 <Text style={styles.dashboardScoreTeamName}>{data["matchInfo"].battingFirst}</Text>
-                <Text style={styles.dashboardScore}>{arrayScores[index] ? arrayScores[index].totalScore:0} - {data["matchInfo"].wickets}</Text>
+                <Text style={styles.dashboardScore}>{arrayScores[index] ? arrayScores[index].totalScore : 0} - {data["matchInfo"].wickets}</Text>
                 <Text style={styles.dashboardOver}>Current Over {oversBowledRounded}.{balls}</Text>
                 <View style={styles.bottomlegend}>
                     <Text style={styles.dashboardTotalOver}>Total Overs {data["matchInfo"].overs}</Text>
                     <Text style={styles.dashboardTarget}>Target ({data["matchInfo"].target})</Text>
                     <Text style={styles.dashboardTarget}>Toss win by {data["matchInfo"].tossWin}</Text>
-                </View> 
+                </View>
             </View>
 
             <View style={styles.dashboardPlayers}>

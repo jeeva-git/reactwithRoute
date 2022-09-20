@@ -1,33 +1,42 @@
 import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { enterScoreAction } from "../Actions/MatchInfoActions";
-
 
 const ScoringComponent = (props) => {
     const data = useSelector((state) => state.matchInfoStore);
     const dispatch = useDispatch();
-    const [ballId, setBallId] = React.useState(0);
+
+    //get index
+    const arrayScores = data["scoreDetails"];
+    const index = arrayScores.length - 1;
+    //calculate score
+    const tempScore = arrayScores.length > 0 ? arrayScores[index].totalScore + props.details.score : props.details.score;
+    //calculate no of balls
+    let previousBall = arrayScores[index].ball;
+
     return (
         <TouchableOpacity style={styles.roundView} onPress={() => {
-            const id = ballId;
-            setBallId(id+1);
-            //get index
-            const arrayScores = data["scoreDetails"];
-            const index= arrayScores.length-1;
-            const tempScore = arrayScores.length>0 ? arrayScores[index].totalScore + props.details.score : props.details.score;
+            console.log("props.action",props.action != "Wd", props.action !== "Wd");
+            //do not count the ball for extras
+            if (props.action != "Wd" &&
+                props.action != "Nb" &&
+                props.action != "B" &&
+                props.action != "Wk") {
+                    previousBall = previousBall+1;
+            }
 
             dispatch(enterScoreAction({
                 "batsmanName": props.details.batsmanName,
                 "batsmanScore": props.details.batsmanScore,
                 "score": props.details.score,
-                "ball": ballId,
+                "ball": previousBall,
                 "bowler": props.details.bowler,
                 "runsByWide": props.details.runsByWide,
                 "runsByNoBall": props.details.runsByNoBall,
-                "runsByByes": props.details.runsByByes, 
-                "totalScore":tempScore
+                "runsByByes": props.details.runsByByes,
+                "totalScore": tempScore
             }))
         }
         }>
