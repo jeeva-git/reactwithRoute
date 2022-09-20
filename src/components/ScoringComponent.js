@@ -1,12 +1,15 @@
-import React from "react";
+import React, { isValidElement } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { enterScoreAction } from "../Actions/MatchInfoActions";
+import Prompt from "react-native-prompt-crossplatform";
 
 const ScoringComponent = (props) => {
     const data = useSelector((state) => state.matchInfoStore);
     const dispatch = useDispatch();
+    const [extras, setExtras] = React.useState(0);
+    const [isVisible, setIsVisible] = React.useState(false);
 
     //get index
     const arrayScores = data["scoreDetails"];
@@ -16,32 +19,63 @@ const ScoringComponent = (props) => {
     //calculate no of balls
     let previousBall = arrayScores[index].ball;
 
-    return (
-        <TouchableOpacity style={styles.roundView} onPress={() => {
-            console.log("props.action",props.action != "Wd", props.action !== "Wd");
-            //do not count the ball for extras
-            if (props.action != "Wd" &&
-                props.action != "Nb" &&
-                props.action != "B" &&
-                props.action != "Wk") {
-                    previousBall = previousBall+1;
-            }
+    //calculate wickets
+    let totalWickets = arrayScores[index].totalWickets;
+    function fnDispatch (islegal,action) {
+        dispatch(enterScoreAction({
+            "batsmanName": props.details.batsmanName,
+            "batsmanScore": props.details.batsmanScore,
+            "score":  parseInt(props.details.score)+parseInt(extras),
+            "ball": previousBall,
+            "bowler": props.details.bowler,
+            "runsByWide": props.action == "Wd" ?  parseInt(props.details.score)+parseInt(extras):0,
+            "runsByNoBall": props.action == "Nb" ? parseInt(props.details.score)+parseInt(extras):0,
+            "runsByByes": props.action == "B" ? parseInt(props.details.score)+parseInt(extras):0,
+            "totalScore": parseInt(tempScore)+parseInt(extras),
+            "isLegaDelivery":islegal,
+            "totalWickets": props.action == "Wk"? totalWickets+1:totalWickets,
+            "isWicket":props.action == "Wk"? true : false
+        }));
+    }
 
-            dispatch(enterScoreAction({
-                "batsmanName": props.details.batsmanName,
-                "batsmanScore": props.details.batsmanScore,
-                "score": props.details.score,
-                "ball": previousBall,
-                "bowler": props.details.bowler,
-                "runsByWide": props.details.runsByWide,
-                "runsByNoBall": props.details.runsByNoBall,
-                "runsByByes": props.details.runsByByes,
-                "totalScore": tempScore
-            }))
-        }
-        }>
-            <Text style={styles.actionText}>{props.action}</Text>
-        </TouchableOpacity>
+    return (
+        <><Prompt
+            title="Enter total extras"
+            placeholder="Runs"
+            isVisible={isVisible}
+            inputPlaceholder="placeholder"
+            defaultValue = "0"
+            onChangeText={(text) => {
+                setExtras(text);
+            } }
+            onCancel={() => {
+                setIsVisible(false);
+            } }
+            onSubmit={() => {
+                setIsVisible(false);
+                fnDispatch(false,props.action);
+            } } />
+            <TouchableOpacity style={styles.roundView} onPress={() => {
+                //count valid ball only
+                if (props.action != "Wd" &&
+                    props.action != "Nb" &&
+                    props.action != "B" &&
+                    props.action != "Wk") {
+                    previousBall = previousBall + 1;
+                    fnDispatch(true,props.action);
+                }
+                else if(props.action === "Wk") {
+                    console.log("************ Inside WK ************ ", props.action);
+                    previousBall = previousBall + 1;
+                    setIsVisible(false);
+                    fnDispatch(true,props.action);
+                }
+                else {
+                    setIsVisible(true,props.action);
+                }
+            } }>
+                <Text style={styles.actionText}>{props.action}</Text>
+            </TouchableOpacity></>
     );
 }
 const styles = StyleSheet.create({

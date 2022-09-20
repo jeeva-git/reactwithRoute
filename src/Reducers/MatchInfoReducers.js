@@ -7,7 +7,7 @@ console.log("************ Inside matchInfoLoggedReducer state ************ ", st
       return {
         ...state,
         matchInfo:action.payload,
-        scoreDetails:[{"totalScore": 0,ball:0}]
+        scoreDetails:[{"totalScore": 0,ball:0,"totalWickets": 0}]
       };
     case SCORE_ENTERED:
       return {

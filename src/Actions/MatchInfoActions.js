@@ -1,7 +1,7 @@
 import { MATCH_INFO_LOGGED, SCORE_ENTERED } from "../constants";
 
 export function matchInfoLoggedAction(props) {
-    console.log("Inside matchInfoLoggedAction props", props.teamA);
+    // console.log("Inside matchInfoLoggedAction props", props.teamA);
     return {
         type: MATCH_INFO_LOGGED,
         payload: {
@@ -19,7 +19,7 @@ export function matchInfoLoggedAction(props) {
     }
 }
 export function enterScoreAction(props) {
-    console.log("Inside Scoring Actions props", props);
+    // console.log("Inside Scoring Actions props", props);
     return {
         type: SCORE_ENTERED,
         payload: {
@@ -31,7 +31,10 @@ export function enterScoreAction(props) {
             "runsByWide": props.runsByWide,
             "runsByNoBall": props.runsByNoBall,
             "runsByByes": props.runsByByes,
-            "totalScore":props.totalScore
+            "totalScore":props.totalScore,
+            "isLegaDelivery":props.isLegaDelivery,
+            "totalWickets": props.totalWickets,
+            "isWicket":props.isWicket,
         }
     }
 }
