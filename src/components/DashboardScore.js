@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native";
 import PlayingBatsman from "./PlayingBatsman";
 import ScoringComponent from "./ScoringComponent";
 import { useSelector } from "react-redux";
@@ -9,14 +9,16 @@ const DashboardScore = ({ navigation }) => {
 
     const arrayScores = data["scoreDetails"];
     const index = arrayScores.length - 1;
+    const [onStrikeBatsman, setOnStrikeBatsman] = React.useState("");
+    const [offStrikeBatsman, setOffStrikeBatsman] = React.useState("");
 
     var oversBowledRounded = Math.floor(data["matchInfo"].ballsBowled / 6);
     var balls = data["matchInfo"].ballsBowled % 6;
 
-    if (arrayScores.length>= 0) {
-       // console.log("arrayScores[index]",arrayScores[index].ball);
-        oversBowledRounded = Math.floor(arrayScores[index]? arrayScores[index].ball / 6 : 0);
-        balls = arrayScores[index]? arrayScores[index].ball % 6:0;
+    if (arrayScores.length >= 0) {
+        // console.log("arrayScores[index]",arrayScores[index].ball);
+        oversBowledRounded = Math.floor(arrayScores[index] ? arrayScores[index].ball / 6 : 0);
+        balls = arrayScores[index] ? arrayScores[index].ball % 6 : 0;
     }
 
     navigation.setOptions(
@@ -33,7 +35,7 @@ const DashboardScore = ({ navigation }) => {
         <View>
             <View style={styles.dashboardScoreCard}>
                 <Text style={styles.dashboardScoreTeamName}>{data["matchInfo"].battingFirst}</Text>
-                <Text style={styles.dashboardScore}>{arrayScores[index] ? arrayScores[index].totalScore : 0} - {arrayScores[index] ? arrayScores[index].totalWickets:0}</Text>
+                <Text style={styles.dashboardScore}>{arrayScores[index] ? arrayScores[index].totalScore : 0} - {arrayScores[index] ? arrayScores[index].totalWickets : 0}</Text>
                 <Text style={styles.dashboardOver}>Current Over {oversBowledRounded}.{balls}</Text>
                 <View style={styles.bottomlegend}>
                     <Text style={styles.dashboardTotalOver}>Total Overs {data["matchInfo"].overs}</Text>
@@ -43,50 +45,57 @@ const DashboardScore = ({ navigation }) => {
             </View>
 
             <View style={styles.dashboardPlayers}>
-                <PlayingBatsman name={"Francis"} />
-                <PlayingBatsman name={"Suriya"} />
+                <PlayingBatsman tag={1} name={setOnStrikeBatsman} />
+                <PlayingBatsman tag={2} name={setOffStrikeBatsman} />
             </View>
 
             <View style={styles.headerView}><Text style={styles.dashboardOver}>Actions</Text></View>
             <View style={styles.scoreActionView}>
                 <ScoringComponent action={0} details={{
-                    "batsmanName": "Batsman A",
+                    "onStrikeBatsmanName": onStrikeBatsman,
+                    "offStrikeBatsmanName": offStrikeBatsman,
                     "batsmanScore": 0,
                     "score": 0,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={1} details={{
-                    "batsmanName": "Batsman A",
+                    "onStrikeBatsmanName": onStrikeBatsman,
+                    "offStrikeBatsmanName": offStrikeBatsman,
                     "batsmanScore": 1,
                     "score": 1,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={2} details={{
-                    "batsmanName": "Batsman A",
+                    "onStrikeBatsmanName": onStrikeBatsman,
+                    "offStrikeBatsmanName": offStrikeBatsman, 
                     "batsmanScore": 2,
                     "score": 2,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={3} details={{
-                    "batsmanName": "Batsman A",
+                    "onStrikeBatsmanName": onStrikeBatsman,
+                    "offStrikeBatsmanName": offStrikeBatsman,
                     "batsmanScore": 3,
                     "score": 3,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={4} details={{
-                    "batsmanName": "Batsman A",
+                   "onStrikeBatsmanName": onStrikeBatsman,
+                   "offStrikeBatsmanName": offStrikeBatsman,
                     "batsmanScore": 4,
                     "score": 4,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={5} details={{
-                    "batsmanName": "Batsman A",
+                    "onStrikeBatsmanName": onStrikeBatsman,
+                    "offStrikeBatsmanName": offStrikeBatsman,
                     "batsmanScore": 5,
                     "score": 5,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={6} details={{
-                    "batsmanName": "Batsman A",
+                    "onStrikeBatsmanName": onStrikeBatsman,
+                    "offStrikeBatsmanName": offStrikeBatsman,
                     "batsmanScore": 6,
                     "score": 6,
                     "bowler": "Bowler1",
@@ -94,25 +103,29 @@ const DashboardScore = ({ navigation }) => {
             </View>
             <View style={styles.scoreActionView}>
                 <ScoringComponent action={"Wd"} details={{
-                    "batsmanName": "Batsman A",
+                    "onStrikeBatsmanName": onStrikeBatsman,
+                    "offStrikeBatsmanName": offStrikeBatsman,
                     "batsmanScore": 0,
                     "score": 1,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={"Nb"} details={{
-                    "batsmanName": "Batsman A",
+                    "onStrikeBatsmanName": onStrikeBatsman,
+                    "offStrikeBatsmanName": offStrikeBatsman,
                     "batsmanScore": 0,
                     "score": 1,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={"B"} details={{
-                    "batsmanName": "Batsman A",
+                    "onStrikeBatsmanName": onStrikeBatsman,
+                    "offStrikeBatsmanName": offStrikeBatsman,
                     "batsmanScore": 0,
                     "score": 1,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={"Wk"} details={{
-                    "batsmanName": "Batsman A",
+                    "onStrikeBatsmanName": onStrikeBatsman,
+                    "offStrikeBatsmanName": offStrikeBatsman,
                     "batsmanScore": 0,
                     "score": 0,
                     "bowler": "Bowler1",
@@ -216,9 +229,20 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center"
     },
-    Bowling: {
-
-    }
+    playername: {
+        textAlign: 'left',
+        color: '#7B16B9',
+        fontSize: 12,
+        margin: 10,
+        fontWeight: "bold"
+    },
+    playerScore: {
+        textAlign: 'center',
+        color: '#7B16B9',
+        fontSize: 12,
+        margin: 10,
+        fontWeight: "bold"
+    },
 });
 
 export default DashboardScore;
