@@ -9,12 +9,14 @@ const DashboardScore = ({ navigation }) => {
 
     const arrayScores = data["scoreDetails"];
     const index = arrayScores.length - 1;
-    const [onStrikeBatsman, setOnStrikeBatsman] = React.useState("");
-    const [offStrikeBatsman, setOffStrikeBatsman] = React.useState("");
+    const [batsmanOne, setBatsmanOne] = React.useState("");
+    const [batsmanTwo, setBatsmanTwo] = React.useState("");
+
+    const batsmanSwitched = arrayScores[index].batsmanSwitch;
 
     var oversBowledRounded = Math.floor(data["matchInfo"].ballsBowled / 6);
     var balls = data["matchInfo"].ballsBowled % 6;
-
+    
     if (arrayScores.length >= 0) {
         // console.log("arrayScores[index]",arrayScores[index].ball);
         oversBowledRounded = Math.floor(arrayScores[index] ? arrayScores[index].ball / 6 : 0);
@@ -45,87 +47,96 @@ const DashboardScore = ({ navigation }) => {
             </View>
 
             <View style={styles.dashboardPlayers}>
-                <PlayingBatsman tag={1} name={setOnStrikeBatsman} />
-                <PlayingBatsman tag={2} name={setOffStrikeBatsman} />
+                <PlayingBatsman tag={1} name={setBatsmanOne}/>
+                <PlayingBatsman tag={2} name={setBatsmanTwo} />
             </View>
 
             <View style={styles.headerView}><Text style={styles.dashboardOver}>Actions</Text></View>
             <View style={styles.scoreActionView}>
                 <ScoringComponent action={0} details={{
-                    "onStrikeBatsmanName": onStrikeBatsman,
-                    "offStrikeBatsmanName": offStrikeBatsman,
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
                     "batsmanScore": 0,
                     "score": 0,
                     "bowler": "Bowler1",
+                    "batsmanSwitch": false,
                 }} />
                 <ScoringComponent action={1} details={{
-                    "onStrikeBatsmanName": onStrikeBatsman,
-                    "offStrikeBatsmanName": offStrikeBatsman,
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
+                    "onStrikeBatsmanScore": arrayScores[index].onStrikeBatsmanScore? arrayScores[index].onStrikeBatsmanScore+1:1,
+                    "offStrikeBatsmanScore": arrayScores[index].offStrikeBatsmanScore ? arrayScores[index].offStrikeBatsmanScore:0,
                     "batsmanScore": 1,
                     "score": 1,
                     "bowler": "Bowler1",
+                    "batsmanSwitch": true,
                 }} />
                 <ScoringComponent action={2} details={{
-                    "onStrikeBatsmanName": onStrikeBatsman,
-                    "offStrikeBatsmanName": offStrikeBatsman, 
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
                     "batsmanScore": 2,
                     "score": 2,
                     "bowler": "Bowler1",
+                    "batsmanSwitch": false,
                 }} />
                 <ScoringComponent action={3} details={{
-                    "onStrikeBatsmanName": onStrikeBatsman,
-                    "offStrikeBatsmanName": offStrikeBatsman,
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
                     "batsmanScore": 3,
                     "score": 3,
                     "bowler": "Bowler1",
+                    "batsmanSwitch": true,
                 }} />
                 <ScoringComponent action={4} details={{
-                   "onStrikeBatsmanName": onStrikeBatsman,
-                   "offStrikeBatsmanName": offStrikeBatsman,
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
                     "batsmanScore": 4,
                     "score": 4,
                     "bowler": "Bowler1",
+                    "batsmanSwitch": false,
                 }} />
                 <ScoringComponent action={5} details={{
-                    "onStrikeBatsmanName": onStrikeBatsman,
-                    "offStrikeBatsmanName": offStrikeBatsman,
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
                     "batsmanScore": 5,
                     "score": 5,
                     "bowler": "Bowler1",
+                    "batsmanSwitch": true,
                 }} />
                 <ScoringComponent action={6} details={{
-                    "onStrikeBatsmanName": onStrikeBatsman,
-                    "offStrikeBatsmanName": offStrikeBatsman,
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
                     "batsmanScore": 6,
                     "score": 6,
                     "bowler": "Bowler1",
+                    "batsmanSwitch": false,
                 }} />
             </View>
             <View style={styles.scoreActionView}>
                 <ScoringComponent action={"Wd"} details={{
-                    "onStrikeBatsmanName": onStrikeBatsman,
-                    "offStrikeBatsmanName": offStrikeBatsman,
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
                     "batsmanScore": 0,
                     "score": 1,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={"Nb"} details={{
-                    "onStrikeBatsmanName": onStrikeBatsman,
-                    "offStrikeBatsmanName": offStrikeBatsman,
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
                     "batsmanScore": 0,
                     "score": 1,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={"B"} details={{
-                    "onStrikeBatsmanName": onStrikeBatsman,
-                    "offStrikeBatsmanName": offStrikeBatsman,
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
                     "batsmanScore": 0,
                     "score": 1,
                     "bowler": "Bowler1",
                 }} />
                 <ScoringComponent action={"Wk"} details={{
-                    "onStrikeBatsmanName": onStrikeBatsman,
-                    "offStrikeBatsmanName": offStrikeBatsman,
+                    "onStrikeBatsmanName": batsmanSwitched ? batsmanTwo:batsmanOne,
+                    "offStrikeBatsmanName": batsmanSwitched ? batsmanOne:batsmanTwo,
                     "batsmanScore": 0,
                     "score": 0,
                     "bowler": "Bowler1",
@@ -141,10 +152,10 @@ const DashboardScore = ({ navigation }) => {
             </View>
             <View style={styles.scoreActionView}>
                 <Text style={[styles.blueTxt, styles.width40]}>Jeeva</Text>
-                <Text style={[styles.blueTxt, styles.width20, styles.txtCenter]}>1.1</Text>
-                <Text style={[styles.blueTxt, styles.width20, styles.txtCenter]}>11</Text>
-                <Text style={[styles.blueTxt, styles.width20, styles.txtCenter]}>10</Text>
-                <Text style={[styles.blueTxt, styles.width20, styles.txtCenter]}>1</Text>
+                <Text style={[styles.blueTxt, styles.width20, styles.txtCenter]}>0</Text>
+                <Text style={[styles.blueTxt, styles.width20, styles.txtCenter]}>0</Text>
+                <Text style={[styles.blueTxt, styles.width20, styles.txtCenter]}>0</Text>
+                <Text style={[styles.blueTxt, styles.width20, styles.txtCenter]}>0</Text>
             </View>
         </View>
     )

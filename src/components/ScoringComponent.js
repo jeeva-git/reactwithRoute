@@ -24,10 +24,13 @@ const ScoringComponent = (props) => {
     //no.of dot balls
     var dotballs = arrayScores.filter(function(p){return p.score == 0;});
     
+    console.log("onStrikeBatsmanScore",arrayScores[index].onStrikeBatsmanScore);
     function fnDispatch (islegal,action) {
         dispatch(enterScoreAction({
             "onStrikeBatsmanName": props.details.onStrikeBatsmanName,
+            "onStrikeBatsmanScore": props.details.onStrikeBatsmanScore,
             "offStrikeBatsmanName": props.details.offStrikeBatsmanName,
+            "offStrikeBatsmanScore": props.details.offStrikeBatsmanScore,
             "batsmanScore": props.details.batsmanScore,
             "score":  parseInt(props.details.score)+parseInt(extras),
             "ball": previousBall,

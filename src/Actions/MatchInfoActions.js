@@ -24,7 +24,9 @@ export function enterScoreAction(props) {
         type: SCORE_ENTERED,
         payload: {
             "onStrikeBatsmanName": props.onStrikeBatsmanName,
+            "onStrikeBatsmanScore": props.onStrikeBatsmanScore,
             "offStrikeBatsmanName": props.offStrikeBatsmanName,
+            "offStrikeBatsmanScore": props.offStrikeBatsmanScore,
             "batsmanScore": props.batsmanScore,
             "score": props.score,
             "ball": props.ball,
