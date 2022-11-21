@@ -35,7 +35,6 @@ const PlayingBatsman = (props) => {
             onSubmit={() => {
                 setIsVisible(false);
                 const v = props.tag == 2 ? props.name(offStrikeBatsman) : props.name(onStrikeBatsman)
-                console.log("props.tag", onStrikeBatsman, "   ---- ", offStrikeBatsman);
             }} />
             <View>
                 <TouchableOpacity style={styles.playername} onPress={() => {

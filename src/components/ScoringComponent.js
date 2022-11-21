@@ -3,9 +3,9 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { enterScoreAction } from "../Actions/MatchInfoActions";
-import Prompt from "react-native-prompt-crossplatform";
 
 const ScoringComponent = (props) => {
+    console.log("Inside Scoring component");
     const data = useSelector((state) => state.matchInfoStore);
     const dispatch = useDispatch();
     const [extras, setExtras] = React.useState(0);
@@ -22,26 +22,35 @@ const ScoringComponent = (props) => {
     //calculate wickets
     let totalWickets = arrayScores[index].totalWickets;
     //no.of dot balls
-    var dotballs = arrayScores.filter(function(p){return p.score == 0;});
-    
-    console.log("onStrikeBatsmanScore",arrayScores[index].onStrikeBatsmanScore);
-    function fnDispatch (islegal,action) {
+    var dotballs = arrayScores.filter(function (p) { return p.score == 0; });
+
+    //get onstrikebatsman previous score
+    const currentOnStrikeBatsmanName = props.details.batsmanSwitch ?
+        arrayScores[index].offStrikeBatsmanName : arrayScores[index].onStrikeBatsmanName;
+
+    const currentOffStrikeBatsmanName = currentOnStrikeBatsmanName == arrayScores[index].onStrikeBatsmanName ?
+     arrayScores[index].offStrikeBatsmanName : arrayScores[index].onStrikeBatsmanName;
+    console.log("props.details.batsmanSwitch",props.details.batsmanSwitch);
+     console.log("onStrikeBatsmanName:"+arrayScores[index].onStrikeBatsmanName," offStrikeBatsmanName:",arrayScores[index].offStrikeBatsmanName);
+     console.log("currentOnStrikeBatsmanName:"+currentOnStrikeBatsmanName," currentOffStrikeBatsmanName:",currentOffStrikeBatsmanName);
+
+    function fnDispatch(islegal, action) {
         dispatch(enterScoreAction({
-            "onStrikeBatsmanName": props.details.onStrikeBatsmanName,
+            "onStrikeBatsmanName": currentOnStrikeBatsmanName,
             "onStrikeBatsmanScore": props.details.onStrikeBatsmanScore,
-            "offStrikeBatsmanName": props.details.offStrikeBatsmanName,
+            "offStrikeBatsmanName": currentOffStrikeBatsmanName,
             "offStrikeBatsmanScore": props.details.offStrikeBatsmanScore,
             "batsmanScore": props.details.batsmanScore,
-            "score":  parseInt(props.details.score)+parseInt(extras),
+            "score": parseInt(props.details.score) + parseInt(extras),
             "ball": previousBall,
             "bowler": props.details.bowler,
-            "runsByWide": props.action == "Wd" ?  parseInt(props.details.score)+parseInt(extras):0,
-            "runsByNoBall": props.action == "Nb" ? parseInt(props.details.score)+parseInt(extras):0,
-            "runsByByes": props.action == "B" ? parseInt(props.details.score)+parseInt(extras):0,
-            "totalScore": parseInt(tempScore)+parseInt(extras),
-            "isLegaDelivery":islegal,
-            "totalWickets": props.action == "Wk"? totalWickets+1:totalWickets,
-            "isWicket":props.action == "Wk"? true : false
+            "runsByWide": props.action == "Wd" ? parseInt(props.details.score) + parseInt(extras) : 0,
+            "runsByNoBall": props.action == "Nb" ? parseInt(props.details.score) + parseInt(extras) : 0,
+            "runsByByes": props.action == "B" ? parseInt(props.details.score) + parseInt(extras) : 0,
+            "totalScore": parseInt(tempScore) + parseInt(extras),
+            "isLegaDelivery": islegal,
+            "totalWickets": props.action == "Wk" ? totalWickets + 1 : totalWickets,
+            "isWicket": props.action == "Wk" ? true : false
         }));
     }
 
@@ -51,17 +60,17 @@ const ScoringComponent = (props) => {
             placeholder="Runs"
             isVisible={isVisible}
             inputPlaceholder="placeholder"
-            defaultValue = "0"
+            defaultValue="0"
             onChangeText={(text) => {
                 setExtras(text);
-            } }
+            }}
             onCancel={() => {
                 setIsVisible(false);
-            } }
+            }}
             onSubmit={() => {
                 setIsVisible(false);
-                fnDispatch(false,props.action);
-            } } />
+                fnDispatch(false, props.action);
+            }} />
             <TouchableOpacity style={styles.roundView} onPress={() => {
                 //count valid ball only
                 if (props.action != "Wd" &&
@@ -69,18 +78,17 @@ const ScoringComponent = (props) => {
                     props.action != "B" &&
                     props.action != "Wk") {
                     previousBall = previousBall + 1;
-                    fnDispatch(true,props.action);
+                    fnDispatch(true, props.action);
                 }
-                else if(props.action === "Wk") {
-                    console.log("************ Inside WK ************ ", props.action);
+                else if (props.action === "Wk") {
                     previousBall = previousBall + 1;
                     setIsVisible(false);
-                    fnDispatch(true,props.action);
+                    fnDispatch(true, props.action);
                 }
                 else {
-                    setIsVisible(true,props.action);
+                    setIsVisible(true, props.action);
                 }
-            } }>
+            }}>
                 <Text style={styles.actionText}>{props.action}</Text>
             </TouchableOpacity></>
     );
